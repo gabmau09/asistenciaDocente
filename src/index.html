@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Asistencia Docente — Instituto de Informática</title>
+    <meta name="description" content="Sistema de registro de asistencia docente del Instituto de Informática - Universidad Nacional de Piura">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ========================================
+           DESIGN TOKENS & CSS CUSTOM PROPERTIES
+           ======================================== */
+        :root {
+            /* Colors — Primary palette */
+            --color-primary-50: #eff6ff;
+            --color-primary-100: #dbeafe;
+            --color-primary-200: #bfdbfe;
+            --color-primary-300: #93c5fd;
+            --color-primary-400: #60a5fa;
+            --color-primary-500: #3b82f6;
+            --color-primary-600: #2563eb;
+            --color-primary-700: #1d4ed8;
+            --color-primary-800: #1e40af;
+            --color-primary-900: #1e3a8a;
+
+            /* Colors — Accent / Purple */
+            --color-accent-400: #a78bfa;
+            --color-accent-500: #8b5cf6;
+            --color-accent-600: #7c3aed;
+
+            /* Colors — Neutral */
+            --color-neutral-50: #f8fafc;
+            --color-neutral-100: #f1f5f9;
+            --color-neutral-200: #e2e8f0;
+            --color-neutral-300: #cbd5e1;
+            --color-neutral-400: #94a3b8;
+            --color-neutral-500: #64748b;
+            --color-neutral-600: #475569;
+            --color-neutral-700: #334155;
+            --color-neutral-800: #1e293b;
+            --color-neutral-900: #0f172a;
+            --color-neutral-950: #020617;
+
+            /* Colors — Semantic */
+            --color-success-400: #4ade80;
+            --color-success-500: #22c55e;
+            --color-success-600: #16a34a;
+            --color-error-400: #f87171;
+            --color-error-500: #ef4444;
+            --color-error-50: #fef2f2;
+            --color-warning-400: #fbbf24;
+            --color-warning-500: #f59e0b;
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--color-primary-600) 0%, var(--color-accent-600) 100%);
+            --gradient-primary-hover: linear-gradient(135deg, var(--color-primary-700) 0%, var(--color-accent-600) 100%);
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.9) 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+
+            /* Typography */
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.8125rem;
+            --font-size-base: 0.9375rem;
+            --font-size-md: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+
+            /* Spacing */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+
+            /* Border Radius */
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.25rem;
+            --radius-2xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+            --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
+            --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.08), 0 8px 10px -6px rgba(0,0,0,0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0,0,0,0.15);
+            --shadow-glow: 0 0 20px rgba(59,130,246,0.15);
+            --shadow-input-focus: 0 0 0 3px rgba(59,130,246,0.15), 0 1px 2px 0 rgba(0,0,0,0.05);
+
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-spring: 500ms cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* ========================================
+           RESET & BASE STYLES
+           ======================================== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            color: var(--color-neutral-800);
+            background: var(--color-neutral-950);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ========================================
+           BACKGROUND DECORATIONS
+           ======================================== */
+        .bg-decoration {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+        }
+
+        .bg-circle--1 {
+            width: 600px;
+            height: 600px;
+            background: var(--color-primary-600);
+            top: -200px;
+            right: -100px;
+            animation: floatSlow 20s ease-in-out infinite;
+        }
+
+        .bg-circle--2 {
+            width: 500px;
+            height: 500px;
+            background: var(--color-accent-600);
+            bottom: -150px;
+            left: -150px;
+            animation: floatSlow 25s ease-in-out infinite reverse;
+        }
+
+        .bg-circle--3 {
+            width: 350px;
+            height: 350px;
+            background: var(--color-primary-400);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: floatSlow 18s ease-in-out infinite 5s;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -20px) scale(1.05); }
+            50% { transform: translate(-20px, 30px) scale(0.95); }
+            75% { transform: translate(20px, 20px) scale(1.02); }
+        }
+
+        /* ========================================
+           APP CONTAINER
+           ======================================== */
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 880px;
+            margin: 0 auto;
+            padding: var(--space-6);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* ========================================
+           HEADER
+           ======================================== */
+        .header {
+            margin-bottom: var(--space-8);
+            animation: slideDown 0.6s var(--transition-spring) both;
+        }
+
+        .header__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-4);
+            padding: var(--space-5) var(--space-6);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-xl);
+        }
+
+        .header__brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .header__logo {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform var(--transition-base);
+            border-radius: var(--radius-md);
+            background: #fff;
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header__logo:hover {
+            transform: rotate(-5deg) scale(1.08);
+        }
+
+        .header__logo svg {
+            width: 28px;
+            height: 28px;
+        }
+
+        .header__title {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        .header__subtitle {
+            font-size: var(--font-size-sm);
+            color: var(--color-neutral-400);
+            font-weight: 400;
+            margin-top: 2px;
+        }
+
+        .header__meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .header__date,
+        .header__time {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-sm);
+            color: var(--color-neutral-300);
+            font-weight: 500;
+            padding: var(--space-2) var(--space-3);
+            background: rgba(255,255,255,0.05);
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .header__time {
+            font-variant-numeric: tabular-nums;
+            color: var(--color-primary-300);
+        }
+
+        /* ========================================
+           ICONS
+           ======================================== */
+        .icon {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* ========================================
+           FORM CARD
+           ======================================== */
+        .form-card {
+            background: var(--gradient-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-2xl);
+            box-shadow: var(--shadow-2xl), var(--shadow-glow);
+            overflow: hidden;
+            animation: slideUp 0.7s var(--transition-spring) 0.1s both;
+        }
+
+        .form-card__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-4);
+            padding: var(--space-6) var(--space-8);
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card__header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
+        }
+
+        .form-card__header-content {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-card__icon-wrapper {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-card__icon {
+            width: 26px;
+            height: 26px;
+            color: #fff;
+        }
+
+        .form-card__title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+        }
+
+        .form-card__description {
+            font-size: var(--font-size-sm);
+            color: rgba(255,255,255,0.85);
+            margin-top: 2px;
+        }
+
+        .form-card__badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-full);
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.02em;
+            position: relative;
+            z-index: 1;
+            white-space: nowrap;
+        }
+
+        .form-card__badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--color-success-400);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(0.85); }
+        }
+
+        /* ========================================
+           FORM
+           ======================================== */
+        .form {
+            padding: var(--space-8);
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-6);
+        }
+
+        .form__row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+        }
+
+        .form__group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .form__group--full {
+            grid-column: 1 / -1;
+        }
+
+        .form__label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-neutral-700);
+            letter-spacing: 0.01em;
+        }
+
+        .form__label .icon {
+            color: var(--color-primary-500);
+        }
+
+        .form__required {
+            color: var(--color-error-500);
+            font-weight: 700;
+            margin-left: 1px;
+        }
+
+        /* Input Wrapper */
+        .form__input-wrapper {
+            position: relative;
+        }
+
+        .form__input {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            color: var(--color-neutral-800);
+            background: var(--color-neutral-50);
+            border: 1.5px solid var(--color-neutral-200);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-base);
+            outline: none;
+        }
+
+        .form__input::placeholder {
+            color: var(--color-neutral-400);
+            font-weight: 400;
+        }
+
+        .form__input:hover {
+            border-color: var(--color-neutral-300);
+            background: #fff;
+        }
+
+        .form__input:focus {
+            border-color: var(--color-primary-500);
+            background: #fff;
+            box-shadow: var(--shadow-input-focus);
+        }
+
+        .form__input--time {
+            cursor: pointer;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Input validation states */
+        .form__input.is-invalid {
+            border-color: var(--color-error-400);
+            background: var(--color-error-50);
+        }
+
+        .form__input.is-invalid:focus {
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.15), 0 1px 2px 0 rgba(0,0,0,0.05);
+        }
+
+        .form__input.is-valid {
+            border-color: var(--color-success-500);
+        }
+
+        /* Select Wrapper */
+        .form__select-wrapper {
+            position: relative;
+        }
+
+        .form__select {
+            width: 100%;
+            padding: var(--space-3) var(--space-4);
+            padding-right: var(--space-10);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            color: var(--color-neutral-800);
+            background: var(--color-neutral-50);
+            border: 1.5px solid var(--color-neutral-200);
+            border-radius: var(--radius-md);
+            appearance: none;
+            -webkit-appearance: none;
+            cursor: pointer;
+            transition: all var(--transition-base);
+            outline: none;
+        }
+
+        .form__select:hover {
+            border-color: var(--color-neutral-300);
+            background: #fff;
+        }
+
+        .form__select:focus {
+            border-color: var(--color-primary-500);
+            background: #fff;
+            box-shadow: var(--shadow-input-focus);
+        }
+
+        .form__select.is-invalid {
+            border-color: var(--color-error-400);
+            background: var(--color-error-50);
+        }
+
+        .form__select.is-valid {
+            border-color: var(--color-success-500);
+        }
+
+        .form__select-arrow {
+            position: absolute;
+            right: var(--space-3);
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: var(--color-neutral-400);
+            pointer-events: none;
+            transition: transform var(--transition-fast), color var(--transition-fast);
+        }
+
+        .form__select:focus + .form__select-arrow {
+            color: var(--color-primary-500);
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        /* Error & Hint */
+        .form__error {
+            display: none;
+            font-size: var(--font-size-xs);
+            color: var(--color-error-500);
+            font-weight: 500;
+            padding-left: var(--space-1);
+            animation: shakeIn 0.3s ease-out;
+        }
+
+        .form__error.is-visible {
+            display: block;
+        }
+
+        .form__hint {
+            font-size: var(--font-size-xs);
+            color: var(--color-neutral-400);
+            padding-left: var(--space-1);
+        }
+
+        /* ========================================
+           BUTTONS
+           ======================================== */
+        .form__actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: var(--space-4);
+            padding-top: var(--space-4);
+            border-top: 1px solid var(--color-neutral-100);
+            margin-top: var(--space-2);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-3) var(--space-6);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.01em;
+        }
+
+        .btn--primary {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: var(--shadow-md), 0 0 0 0 rgba(59,130,246,0);
+            padding: var(--space-3) var(--space-8);
+        }
+
+        .btn--primary:hover {
+            background: var(--gradient-primary-hover);
+            box-shadow: var(--shadow-lg), 0 0 20px rgba(59,130,246,0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn--primary:active {
+            transform: translateY(0);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn--secondary {
+            background: transparent;
+            color: var(--color-neutral-600);
+            border: 1.5px solid var(--color-neutral-200);
+        }
+
+        .btn--secondary:hover {
+            background: var(--color-neutral-50);
+            border-color: var(--color-neutral-300);
+            color: var(--color-neutral-700);
+        }
+
+        .btn--secondary:active {
+            background: var(--color-neutral-100);
+        }
+
+        .btn .icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ========================================
+           RECORDS SUMMARY
+           ======================================== */
+        .records-summary {
+            margin-top: var(--space-6);
+            background: rgba(255,255,255,0.06);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            animation: slideUp 0.7s var(--transition-spring) 0.3s both;
+        }
+
+        .records-summary__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .records-summary__title {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .records-summary__title .icon {
+            color: var(--color-primary-400);
+        }
+
+        .records-summary__count {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            color: var(--color-neutral-400);
+            padding: var(--space-1) var(--space-3);
+            background: rgba(255,255,255,0.06);
+            border-radius: var(--radius-full);
+        }
+
+        .records-summary__body {
+            padding: var(--space-4) var(--space-6);
+            max-height: 250px;
+            overflow-y: auto;
+        }
+
+        .records-summary__empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-6) 0;
+            text-align: center;
+        }
+
+        .records-summary__empty svg {
+            width: 40px;
+            height: 40px;
+            color: var(--color-neutral-600);
+            margin-bottom: var(--space-2);
+        }
+
+        .records-summary__empty p {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--color-neutral-400);
+        }
+
+        .records-summary__empty span {
+            font-size: var(--font-size-xs);
+            color: var(--color-neutral-500);
+        }
+
+        /* Record Item */
+        .record-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-3) var(--space-4);
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-3);
+            animation: slideIn 0.3s var(--transition-spring);
+            transition: background var(--transition-fast);
+        }
+
+        .record-item:hover {
+            background: rgba(255,255,255,0.07);
+        }
+
+        .record-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .record-item__avatar {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            border-radius: var(--radius-sm);
+            color: #fff;
+            font-weight: 700;
+            font-size: var(--font-size-sm);
+            flex-shrink: 0;
+        }
+
+        .record-item__info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .record-item__name {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .record-item__details {
+            font-size: var(--font-size-xs);
+            color: var(--color-neutral-400);
+            margin-top: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .record-item__time {
+            font-size: var(--font-size-xs);
+            color: var(--color-primary-300);
+            font-weight: 600;
+            white-space: nowrap;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ========================================
+           TOAST NOTIFICATION
+           ======================================== */
+        .toast {
+            position: fixed;
+            bottom: var(--space-6);
+            right: var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-5);
+            background: var(--color-neutral-900);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-2xl);
+            z-index: 1000;
+            transform: translateY(120%);
+            opacity: 0;
+            transition: all var(--transition-spring);
+            max-width: 420px;
+        }
+
+        .toast.is-visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast__icon {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(34,197,94,0.15);
+            border-radius: var(--radius-sm);
+            flex-shrink: 0;
+        }
+
+        .toast__icon svg {
+            width: 20px;
+            height: 20px;
+            color: var(--color-success-400);
+        }
+
+        .toast__content {
+            flex: 1;
+        }
+
+        .toast__title {
+            font-size: var(--font-size-sm);
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .toast__message {
+            font-size: var(--font-size-xs);
+            color: var(--color-neutral-400);
+            margin-top: 2px;
+        }
+
+        .toast__close {
+            background: none;
+            border: none;
+            color: var(--color-neutral-500);
+            cursor: pointer;
+            padding: var(--space-1);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .toast__close:hover {
+            color: #fff;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .toast__close svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        /* ========================================
+           FOOTER
+           ======================================== */
+        .footer {
+            margin-top: auto;
+            padding: var(--space-8) 0 var(--space-4);
+            text-align: center;
+        }
+
+        .footer p {
+            font-size: var(--font-size-xs);
+            color: var(--color-neutral-600);
+        }
+
+        /* ========================================
+           ANIMATIONS
+           ======================================== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes shakeIn {
+            0% { transform: translateX(-5px); opacity: 0; }
+            50% { transform: translateX(3px); }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+        @media (max-width: 768px) {
+            .app-container {
+                padding: var(--space-4);
+            }
+
+            .header__inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-3);
+                padding: var(--space-4) var(--space-5);
+            }
+
+            .header__meta {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .form-card__header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--space-3);
+                padding: var(--space-5) var(--space-6);
+            }
+
+            .form-card__title {
+                font-size: var(--font-size-xl);
+            }
+
+            .form {
+                padding: var(--space-6);
+                gap: var(--space-5);
+            }
+
+            .form__row {
+                grid-template-columns: 1fr;
+                gap: var(--space-5);
+            }
+
+            .form__actions {
+                flex-direction: column-reverse;
+                gap: var(--space-3);
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: var(--space-3);
+            }
+
+            .header__brand {
+                gap: var(--space-3);
+            }
+
+            .header__logo {
+                width: 40px;
+                height: 40px;
+            }
+
+            .header__title {
+                font-size: var(--font-size-lg);
+            }
+
+            .header__subtitle {
+                font-size: var(--font-size-xs);
+            }
+
+            .header__meta {
+                flex-wrap: wrap;
+                gap: var(--space-2);
+            }
+
+            .form-card__header {
+                padding: var(--space-4) var(--space-5);
+            }
+
+            .form-card__icon-wrapper {
+                width: 40px;
+                height: 40px;
+            }
+
+            .form-card__icon {
+                width: 22px;
+                height: 22px;
+            }
+
+            .form-card__title {
+                font-size: var(--font-size-lg);
+            }
+
+            .form {
+                padding: var(--space-5);
+                gap: var(--space-4);
+            }
+
+            .toast {
+                left: var(--space-4);
+                right: var(--space-4);
+                bottom: var(--space-4);
+                max-width: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background decorative elements -->
+    <div class="bg-decoration">
+        <div class="bg-circle bg-circle--1"></div>
+        <div class="bg-circle bg-circle--2"></div>
+        <div class="bg-circle bg-circle--3"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header" id="main-header">
+            <div class="header__inner">
+                <div class="header__brand">
+                    <div class="header__logo" id="logo-icon" title="Instituto de Informática - UNP">
+                      <img src="https://lh3.googleusercontent.com/d/18T2qw5FsrpZrVN4S3y6xwVFBufKRcaRo" alt="Logo Instituto" style="width: 100%; height: 100%; object-fit: contain; border-radius: var(--radius-md);">
+</div>
+                    <div class="header__text">
+                        <h1 class="header__title">Instituto de Informática</h1>
+                        <p class="header__subtitle">Universidad Nacional de Piura</p>
+                    </div>
+                </div>
+                <div class="header__meta">
+                    <div class="header__date" id="current-date">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        <span id="date-text">Cargando fecha...</span>
+                    </div>
+                    <div class="header__time" id="current-time">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <polyline points="12 6 12 12 16 14"/>
+                        </svg>
+                        <span id="time-text">--:--:--</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="form-card" id="attendance-card">
+                <!-- Card Header -->
+                <div class="form-card__header">
+                    <div class="form-card__header-content">
+                        <div class="form-card__icon-wrapper">
+                            <svg class="form-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4-4v2"/>
+                                <circle cx="9" cy="7" r="4"/>
+                                <path d="M22 21v-2a4 4 0 00-3-3.87"/>
+                                <path d="M16 3.13a4 4 0 010 7.75"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="form-card__title">Registro de Asistencia</h2>
+                            <p class="form-card__description">Complete los campos para registrar la asistencia docente</p>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <!-- Form -->
+                <form class="form" id="attendance-form" novalidate>
+                    <!-- Row 1: Docente -->
+                    <div class="form__group form__group--full">
+                        <label class="form__label" for="docente">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4-4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            Docente
+                            <span class="form__required">*</span>
+                        </label>
+                        <div class="form__select-wrapper">
+                            <select class="form__select" id="docente" name="docente" required>
+                                <option value="" disabled selected>Seleccione un docente</option>
+                            </select>
+                            <svg class="form__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </div>
+                        <span class="form__error" id="docente-error">Seleccione un docente</span>
+                    </div>
+
+                    <!-- Row 2: Modalidad & Grupo -->
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="modalidad">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+                                    <line x1="8" y1="21" x2="16" y2="21"/>
+                                    <line x1="12" y1="17" x2="12" y2="21"/>
+                                </svg>
+                                Modalidad
+                                <span class="form__required">*</span>
+                            </label>
+                            <div class="form__select-wrapper">
+                                <select class="form__select" id="modalidad" name="modalidad" required>
+                                    <option value="" disabled selected>Seleccione modalidad</option>
+                                    <option value="Curso">Curso</option>
+                                    <option value="Examen de Suficiencia">Examen de Suficiencia</option>
+                                </select>
+                                <svg class="form__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </div>
+                            <span class="form__error" id="modalidad-error">Seleccione una modalidad</span>
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__label" for="grupo">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/>
+                                    <circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87"/>
+                                    <path d="M16 3.13a4 4 0 010 7.75"/>
+                                </svg>
+                                Grupo
+                                <span class="form__required">*</span>
+                            </label>
+                            <div class="form__select-wrapper">
+                                <select class="form__select" id="grupo" name="grupo" required>
+                                    <option value="" disabled selected>Seleccione grupo</option>
+                                </select>
+                                <svg class="form__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"/>
+                                </svg>
+                            </div>
+                            <span class="form__error" id="grupo-error">Seleccione un grupo</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Sesión -->
+                    <div class="form__group form__group--full">
+                        <label class="form__label" for="sesion">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+                            </svg>
+                            Sesión
+                            <span class="form__required">*</span>
+                        </label>
+                        <div class="form__select-wrapper">
+                            <select class="form__select" id="sesion" name="sesion" required>
+                                <option value="" disabled selected>Seleccione la sesión</option>
+                            </select>
+                            <svg class="form__select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"/>
+                            </svg>
+                        </div>
+                        <span class="form__error" id="sesion-error">Seleccione una sesión</span>
+                    </div>
+
+                    <!-- Row 4: Hora Inicio & Hora Fin -->
+                    <div class="form__row">
+                        <div class="form__group">
+                            <label class="form__label" for="hora-inicio">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 16 14"/>
+                                </svg>
+                                Hora de Inicio (24 hrs)
+                                <span class="form__required">*</span>
+                            </label>
+                            <div class="form__input-wrapper">
+                                <input 
+                                    type="time" 
+                                    class="form__input form__input--time" 
+                                    id="hora-inicio" 
+                                    name="hora_inicio" 
+                                    required
+                                >
+                            </div>
+                            <span class="form__error" id="hora-inicio-error">Ingrese la hora de inicio</span>
+                        </div>
+
+                        <div class="form__group">
+                            <label class="form__label" for="hora-fin">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12 6 12 12 8 14"/>
+                                </svg>
+                                Hora de Fin (24 hrs)
+                                <span class="form__required">*</span>
+                            </label>
+                            <div class="form__input-wrapper">
+                                <input 
+                                    type="time" 
+                                    class="form__input form__input--time" 
+                                    id="hora-fin" 
+                                    name="hora_fin" 
+                                    required
+                                >
+                            </div>
+                            <span class="form__error" id="hora-fin-error">Ingrese la hora de fin</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Enlace Meet -->
+                    <div class="form__group form__group--full">
+                        <label class="form__label" for="enlace-meet">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 10l5-3v10l-5-3z"/>
+                                <rect x="2" y="6" width="13" height="12" rx="2"/>
+                            </svg>
+                            Enlace Meet
+                            <span class="form__required">*</span>
+                        </label>
+                        <div class="form__input-wrapper">
+                            <input 
+                                type="text" 
+                                class="form__input" 
+                                id="enlace-meet" 
+                                name="enlace_meet" 
+                                placeholder="https://meet.google.com/xxx-xxxx-xxx"
+                                required
+                                autocomplete="off"
+                            >
+                        </div>
+                        <span class="form__error" id="enlace-meet-error">Este campo es obligatorio</span>
+                        <span class="form__hint">Pegue aquí el enlace de Google Meet (en caso de examen de suficiencia, escriba PRESENCIAL)</span>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form__actions">
+                        <button type="button" class="btn btn--secondary" id="btn-clear">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M3 6h18"/>
+                                <path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/>
+                            </svg>
+                            Limpiar
+                        </button>
+                        <button type="submit" class="btn btn--primary" id="btn-submit">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            <span id="btn-text">Registrar Asistencia</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Recent Submissions Summary -->
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Instituto de Informática — Universidad Nacional de Piura. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast" role="alert" aria-live="assertive">
+        <div class="toast__icon" id="toast-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+        </div>
+        <div class="toast__content">
+            <p class="toast__title" id="toast-title">¡Éxito!</p>
+            <p class="toast__message" id="toast-message">Asistencia registrada correctamente</p>
+        </div>
+        <button class="toast__close" id="toast-close" aria-label="Cerrar notificación">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+
+  <!-- Application Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // ─── DOM Elements ──────────────────────────────
+        const form = document.getElementById('attendance-form');
+        const btnSubmit = document.getElementById('btn-submit');
+        const btnText = document.getElementById('btn-text');
+        const btnClear = document.getElementById('btn-clear');
+        const toast = document.getElementById('toast');
+        const toastClose = document.getElementById('toast-close');
+        const toastTitle = document.getElementById('toast-title');
+        const toastMessage = document.getElementById('toast-message');
+        const dateText = document.getElementById('date-text');
+        const timeText = document.getElementById('time-text');
+
+        // Select Controls
+        const selectDocente = document.getElementById('docente');
+        const selectModalidad = document.getElementById('modalidad');
+        const selectGrupo = document.getElementById('grupo');
+        const selectSesion = document.getElementById('sesion');
+        
+        // Input Controls
+        const inputHoraInicio = document.getElementById('hora-inicio');
+        const inputHoraFin = document.getElementById('hora-fin');
+        const inputEnlaceMeet = document.getElementById('enlace-meet');
+
+        // ─── Estado Inicial (Bloqueos) ───────────────────
+        function bloquearCamposSecundarios() {
+            selectGrupo.disabled = true;
+            selectSesion.disabled = true;
+            inputHoraInicio.disabled = true;
+            inputHoraFin.disabled = true;
+            inputEnlaceMeet.disabled = true;
+            
+            selectGrupo.innerHTML = '<option value="" disabled selected>Seleccione grupo</option>';
+            selectSesion.innerHTML = '<option value="" disabled selected>Seleccione la sesión</option>';
+            
+            // Limpiar valores y clases de validación
+            [inputHoraInicio, inputHoraFin, inputEnlaceMeet].forEach(el => {
+                el.value = '';
+                el.classList.remove('is-valid', 'is-invalid');
+            });
+        }
+        
+        bloquearCamposSecundarios();
+
+        // ─── Carga Inicial de Datos ──────────────────────
+        function cargarDocentes() {
+            selectDocente.innerHTML = '<option value="" disabled selected>Cargando docentes...</option>';
+            google.script.run.withSuccessHandler((docentes) => {
+                selectDocente.innerHTML = '<option value="" disabled selected>Seleccione un docente</option>';
+                docentes.forEach(d => {
+                    const opt = document.createElement('option');
+                    opt.value = d;
+                    opt.textContent = d;
+                    selectDocente.appendChild(opt);
+                });
+            }).obtenerDocentesActivos();
+        }
+
+        cargarDocentes();
+
+        // ─── Lógica de Dependencias ──────────────────────
+        
+        // 1. Docente + Modalidad -> Grupo
+        function verificarDocenteModalidad() {
+            const docente = selectDocente.value;
+            const modalidad = selectModalidad.value;
+
+            if (docente && modalidad) {
+                bloquearCamposSecundarios(); // Resetear campos inferiores
+                selectGrupo.innerHTML = '<option value="" disabled selected>Cargando grupos...</option>';
+                
+                google.script.run.withSuccessHandler((grupos) => {
+                    selectGrupo.innerHTML = '<option value="" disabled selected>Seleccione grupo</option>';
+                    if (grupos.length > 0) {
+                        grupos.forEach(g => {
+                            const opt = document.createElement('option');
+                            opt.value = g;
+                            opt.textContent = g;
+                            selectGrupo.appendChild(opt);
+                        });
+                        selectGrupo.disabled = false; // Desbloquear Grupo
+                    } else {
+                        selectGrupo.innerHTML = '<option value="" disabled selected>Sin grupos activos</option>';
+                    }
+                }).obtenerDetallesDocente(docente, modalidad);
+            } else {
+                bloquearCamposSecundarios();
+            }
+        }
+
+        selectDocente.addEventListener('change', verificarDocenteModalidad);
+        selectModalidad.addEventListener('change', verificarDocenteModalidad);
+
+        // 2. Grupo -> Sesión + Campos Restantes
+        function verificarGrupo() {
+            const docente = selectDocente.value;
+            const modalidad = selectModalidad.value;
+            const grupo = selectGrupo.value;
+
+            if (grupo) {
+                selectSesion.innerHTML = '<option value="" disabled selected>Cargando sesiones...</option>';
+                
+                google.script.run.withSuccessHandler((sesiones) => {
+                    selectSesion.innerHTML = '<option value="" disabled selected>Seleccione la sesión</option>';
+                    if (sesiones.length > 0) {
+                        sesiones.forEach(s => {
+                            const opt = document.createElement('option');
+                            opt.value = s.valor;
+                            opt.textContent = s.texto;
+                            selectSesion.appendChild(opt);
+                        });
+                        // Desbloquear resto de campos
+                        selectSesion.disabled = false;
+                        inputHoraInicio.disabled = false;
+                        inputHoraFin.disabled = false;
+                        inputEnlaceMeet.disabled = false;
+                    } else {
+                        selectSesion.innerHTML = '<option value="" disabled selected>No hay sesiones pendientes</option>';
+                    }
+                }).obtenerSesionesPendientes(docente, grupo, modalidad);
+            } else {
+                selectSesion.disabled = true;
+                inputHoraInicio.disabled = true;
+                inputHoraFin.disabled = true;
+                inputEnlaceMeet.disabled = true;
+            }
+        }
+
+        selectGrupo.addEventListener('change', verificarGrupo);
+
+        // ─── Clock & Date Updates ────────────────────────
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const formattedDate = now.toLocaleDateString('es-PE', dateOptions);
+            dateText.textContent = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+            
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+            timeText.textContent = now.toLocaleTimeString('es-PE', timeOptions);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // ─── Form Validation Logic ───────────────────────
+        const validators = {
+            docente: { element: selectDocente, errorEl: document.getElementById('docente-error'), validate: (val) => val !== '' && val !== null },
+            modalidad: { element: selectModalidad, errorEl: document.getElementById('modalidad-error'), validate: (val) => val !== '' && val !== null },
+            grupo: { element: selectGrupo, errorEl: document.getElementById('grupo-error'), validate: (val) => val !== '' && val !== null },
+            sesion: { element: selectSesion, errorEl: document.getElementById('sesion-error'), validate: (val) => val !== '' && val !== null },
+            'hora-inicio': { element: inputHoraInicio, errorEl: document.getElementById('hora-inicio-error'), validate: (val) => val !== '' },
+            'hora-fin': { element: inputHoraFin, errorEl: document.getElementById('hora-fin-error'), validate: (val) => val !== '' },
+            'enlace-meet': { element: inputEnlaceMeet, errorEl: document.getElementById('enlace-meet-error'), validate: (val) => val.trim().length > 0 }
+        };
+
+        function validateField(fieldName) {
+            const { element, errorEl, validate } = validators[fieldName];
+            if (element.disabled) return true; // Ignorar validación si está bloqueado
+            
+            const isValid = validate(element.value);
+            if (!isValid) {
+                element.classList.add('is-invalid');
+                element.classList.remove('is-valid');
+                errorEl.classList.add('is-visible');
+            } else {
+                element.classList.remove('is-invalid');
+                element.classList.add('is-valid');
+                errorEl.classList.remove('is-visible');
+            }
+            return isValid;
+        }
+
+        function validateAll() {
+            let allValid = true;
+            for (const fieldName of Object.keys(validators)) {
+                if (!validateField(fieldName)) allValid = false;
+            }
+            return allValid;
+        }
+
+        Object.keys(validators).forEach(fieldName => {
+            const el = validators[fieldName].element;
+            el.addEventListener('blur', () => validateField(fieldName));
+            el.addEventListener('change', () => validateField(fieldName));
+        });
+
+        // ─── Toast Notifications ─────────────────────────
+        let toastTimeout;
+        function showToast(title, message, type = 'success') {
+            toastTitle.textContent = title;
+            toastMessage.textContent = message;
+            const iconContainer = document.getElementById('toast-icon');
+            if (type === 'success') {
+                iconContainer.style.background = 'rgba(34,197,94,0.15)';
+                iconContainer.querySelector('svg').style.color = '#4ade80';
+            } else {
+                iconContainer.style.background = 'rgba(239,68,68,0.15)';
+                iconContainer.querySelector('svg').style.color = '#f87171';
+            }
+            toast.classList.add('is-visible');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('is-visible'), 4500);
+        }
+
+        toastClose.addEventListener('click', () => {
+            toast.classList.remove('is-visible');
+            clearTimeout(toastTimeout);
+        });
+
+        // ─── Form Submission ─────────────────────────────
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            if (!validateAll()) {
+                showToast('Campos Incompletos', 'Por favor complete todos los campos requeridos', 'error');
+                const firstInvalid = form.querySelector('.is-invalid');
+                if (firstInvalid) {
+                    firstInvalid.focus();
+                    firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+                return;
+            }
+
+            if (inputHoraFin.value <= inputHoraInicio.value) {
+                showToast('Horario Inválido', 'La hora de fin debe ser posterior a la hora de inicio', 'error');
+                inputHoraFin.classList.add('is-invalid');
+                inputHoraFin.focus();
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnText.textContent = 'Guardando asistencia...';
+
+            const formData = {
+                grupo: selectGrupo.value + "/" + selectDocente.value + "/" + selectModalidad.value,
+                sesion: selectSesion.value,
+                horaInicio: inputHoraInicio.value,
+                horaFin: inputHoraFin.value,
+                enlaceMeet: inputEnlaceMeet.value
+            };
+
+            // Enviar a Google Apps Script
+            google.script.run
+                .withSuccessHandler((respuesta) => {
+                    btnSubmit.disabled = false;
+                    btnText.textContent = 'Registrar Asistencia';
+                    resetForm();
+                    showToast('¡Asistencia Registrada!', 'Asistencia registrada correctamente en la base de datos.');
+                })
+                .withFailureHandler((error) => {
+                    btnSubmit.disabled = false;
+                    btnText.textContent = 'Registrar Asistencia';
+                    showToast('Error', 'Hubo un problema al guardar: ' + error.message, 'error');
+                })
+                .registrarAsistenciaWeb(formData); // Llama a tu función principal modificada
+        });
+
+        // ─── Clear Form ──────────────────────────────────
+        function resetForm() {
+            form.reset();
+            Object.keys(validators).forEach(fieldName => {
+                const el = validators[fieldName].element;
+                el.classList.remove('is-valid', 'is-invalid');
+                validators[fieldName].errorEl.classList.remove('is-visible');
+            });
+            bloquearCamposSecundarios();
+        }
+
+        btnClear.addEventListener('click', resetForm);
+    });
+  </script>
+
+</body>
+</html>
