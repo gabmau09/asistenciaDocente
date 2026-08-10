@@ -29,6 +29,7 @@ El repositorio está dividido en dos partes principales para facilitar el despli
 └── src/             # Código fuente implementado en Google Apps Script.
     ├── codigo.gs    # Backend (Lógica de base de datos, endpoints y reglas de negocio).
     └── index.html   # Frontend de la Web App (Estructura UI, estilos y conexión con el backend).
+```
 
 ## 👨‍💻 Autor
 
