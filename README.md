@@ -2,7 +2,7 @@
 
 Un sistema web de registro de asistencia docente y control de sesiones diseñado para el Instituto de Informática de la Universidad Nacional de Piura (UNP). 
 
-Este proyecto moderniza el flujo de registro reemplazando Google Forms por una Web App personalizada, conectada directamente a Google Sheets como base de datos y alojada mediante un iframe en Railway.
+Este proyecto moderniza el flujo de registro reemplazando Google Forms por una Web App personalizada, conectada directamente a Google Sheets como base de datos y alojada mediante un iframe en un servidor web.
 
 ## Características Principales
 
@@ -21,10 +21,10 @@ Este proyecto moderniza el flujo de registro reemplazando Google Forms por una W
 
 ## Estructura del Proyecto
 
-El repositorio está dividido en dos partes principales para facilitar el despliegue automático en Railway y el mantenimiento del código de Apps Script:
+El repositorio está dividido en dos partes principales para facilitar el despliegue web y el mantenimiento del código de Apps Script:
 
 ```text
-├── index.html       # Archivo de enmascarado (Iframe) utilizado para el despliegue en Railway.
+├── index.html       # Archivo de enmascarado (Iframe) utilizado para el despliegue web público.
 ├── README.md        # Documentación del proyecto.
 └── src/             # Código fuente implementado en Google Apps Script.
     ├── codigo.gs    # Backend (Lógica de base de datos, endpoints y reglas de negocio).
