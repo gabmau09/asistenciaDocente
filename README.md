@@ -1,10 +1,10 @@
-# Sistema de Registro de Asistencia Docente 🎓
+# Sistema de Registro de Asistencia Docente
 
 Un sistema web de registro de asistencia docente y control de sesiones diseñado para el Instituto de Informática de la Universidad Nacional de Piura (UNP). 
 
 Este proyecto moderniza el flujo de registro reemplazando Google Forms por una Web App personalizada, conectada directamente a Google Sheets como base de datos y alojada mediante un iframe en Railway.
 
-## 🚀 Características Principales
+## Características Principales
 
 *   **Filtros Dinámicos Inteligentes:** Los campos del formulario son dependientes. La selección del Docente y la Modalidad determina los Grupos disponibles, lo cual a su vez carga únicamente las Sesiones pendientes de dicho grupo.
 *   **Base de Datos en Google Sheets:** Utiliza el ecosistema de Google Workspace para leer y escribir datos en tiempo real. Los IDs de los documentos han sido enmascarados por seguridad.
@@ -12,14 +12,14 @@ Este proyecto moderniza el flujo de registro reemplazando Google Forms por una W
 *   **Gestión Documental Automática:** Al registrar la asistencia, el sistema ubica el "libro" del docente y registra los datos en la pestaña del mes correspondiente.
 *   **Interfaz Moderna y Responsiva:** Diseño minimalista tipo "Glassmorphism" adaptable a celulares y computadoras.
 
-## 🛠️ Tecnologías Utilizadas
+## Tecnologías Utilizadas
 
 *   **Frontend:** HTML5, CSS3, JavaScript (Vanilla).
 *   **Backend:** Google Apps Script (JavaScript).
 *   **Base de Datos:** Google Sheets API.
-*   **Despliegue (Hosting):** Google Apps Script Web App enmascarada a través de [Railway](https://railway.app/).
+*   **Despliegue (Hosting):** Google Apps Script Web App enmascarada a través de Iframe para alojamiento en cualquier servidor web.
 
-## 📁 Estructura del Proyecto
+## Estructura del Proyecto
 
 El repositorio está dividido en dos partes principales para facilitar el despliegue automático en Railway y el mantenimiento del código de Apps Script:
 
@@ -31,7 +31,7 @@ El repositorio está dividido en dos partes principales para facilitar el despli
     └── index.html   # Frontend de la Web App (Estructura UI, estilos y conexión con el backend).
 ```
 
-## 👨‍💻 Autor
+## Autor
 
 *   **Gabriela Tahis Mauriola Valdiviezo**
 *   **Organización:** Instituto de Informática - Universidad Nacional de Piura (UNP)
